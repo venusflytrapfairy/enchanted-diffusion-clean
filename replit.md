@@ -73,6 +73,10 @@ Preferred communication style: Simple, everyday language.
 - Added proper fallback systems for when AI services are unavailable
 - Improved description refinement logic to use finalDescription consistently
 - Enhanced UI to show when descriptions have been refined based on user feedback
+- Fixed loading animation to show immediately when "Generate Image" button is clicked
+- Enhanced negative prompts to remove "Eco-Generated" watermarks from images
+- Updated footer credits to show "Powered by Hugging Face" and "Stable Diffusion 3.5"
+- Streamlined to use only Stable Diffusion 3.5 Large model per user preference
 
 ### State Management
 - **Server State**: Managed by TanStack Query with automatic caching and synchronization

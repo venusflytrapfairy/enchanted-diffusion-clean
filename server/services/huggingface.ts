@@ -177,16 +177,9 @@ export async function generateImage(description: string): Promise<{ url: string 
     console.error("HuggingFace client failed:", hfError);
   }
 
-  // Try multiple models via direct API calls, including free models
+  // Try Stable Diffusion 3.5 Large via direct API call
   const models = [
-    'stabilityai/stable-diffusion-3.5-large',
-    'black-forest-labs/FLUX.1-dev',
-    'Artples/LAI-ImageGeneration-vSDXL-2',
-    'runwayml/stable-diffusion-v1-5',
-    'CompVis/stable-diffusion-v1-4',
-    'prompthero/openjourney-v4',
-    'SG161222/Realistic_Vision_V4.0_noVAE',
-    'XpucT/Deliberate'
+    'stabilityai/stable-diffusion-3.5-large'
   ];
 
   for (const model of models) {
