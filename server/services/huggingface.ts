@@ -106,92 +106,14 @@ function generateFallbackDescription(userPrompt: string): string {
 
 export async function refineImageDescription(originalDescription: string, userFeedback: string): Promise<string> {
   try {
-    console.log("Refining description with AI feedback integration:", userFeedback);
-    
-    // Try AI-powered refinement first using Phi-3
-    const refinementPrompt = `<|system|>You are an expert at creating image generation prompts. Rewrite the given description to incorporate user feedback while removing contradictions.<|end|>
-<|user|>Original description: "${originalDescription}"
-
-User feedback: "${userFeedback}"
-
-Create a new coherent description that incorporates the feedback and removes any contradictory elements. Keep it detailed but ensure consistency.<|end|>
-<|assistant|>`;
-
-    try {
-      const response = await fetch(
-        "https://api-inference.huggingface.co/models/microsoft/Phi-3-mini-4k-instruct",
-        {
-          headers: {
-            Authorization: `Bearer ${process.env.HUGGINGFACE_API_KEY}`,
-            "Content-Type": "application/json",
-          },
-          method: "POST",
-          body: JSON.stringify({
-            inputs: refinementPrompt,
-            parameters: {
-              max_new_tokens: 150,
-              temperature: 0.7,
-              do_sample: true,
-              top_p: 0.9,
-              stop: ["<|end|>"]
-            }
-          }),
-        }
-      );
-
-      if (response.ok) {
-        const result = await response.json();
-        let refinedText = result[0]?.generated_text || '';
-        
-        // Extract only the assistant's response
-        const assistantStart = refinedText.lastIndexOf('<|assistant|>');
-        if (assistantStart !== -1) {
-          refinedText = refinedText.substring(assistantStart + '<|assistant|>'.length).trim();
-        }
-        
-        // Clean up the response
-        refinedText = refinedText.replace(/<\|end\|>/g, '').trim();
-        refinedText = refinedText.replace(/^["']|["']$/g, '').trim();
-        
-        if (refinedText && refinedText.length > 30) {
-          console.log("AI refinement successful");
-          return refinedText;
-        }
-      } else {
-        console.log("AI refinement failed, status:", response.status);
-      }
-      
-    } catch (aiError) {
-      console.error("Error with AI refinement:", aiError);
-    }
-    
-  } catch (error) {
-    console.error("Error in refinement process:", error);
-  }
-
-  // Fallback to enhanced rule-based refinement
-  console.log("Using enhanced rule-based refinement");
-  return applyEnhancedRefinement(originalDescription, userFeedback);
-}
-
-function applyEnhancedRefinement(originalDescription: string, userFeedback: string): string {
-  try {
+    // Local refinement logic that incorporates user feedback
     let refinedDescription = originalDescription;
+    
     const feedback = userFeedback.toLowerCase();
     
-    // Style transformations with contradiction removal
-    if (feedback.includes('cartoon') || feedback.includes('animated') || feedback.includes('whimsical') || feedback.includes('childlike')) {
-      refinedDescription = refinedDescription.replace(/professional quality|hyperrealistic|photorealistic/gi, 'whimsical cartoon style');
-      refinedDescription = refinedDescription.replace(/dramatic chiaroscuro lighting/gi, 'soft, playful lighting');
-    }
-    
-    if (feedback.includes('realistic') || feedback.includes('photorealistic')) {
-      refinedDescription = refinedDescription.replace(/cartoon|animated|stylized|whimsical/gi, 'photorealistic');
-    }
-    
-    // Color handling
+    // Handle common feedback patterns
     if (feedback.includes('more color') || feedback.includes('colorful')) {
-      refinedDescription = refinedDescription.replace('Rich color palette', 'Vibrant, saturated color palette with bold rainbow hues');
+      refinedDescription = refinedDescription.replace('Rich color palette', 'Vibrant, saturated color palette with bold hues and striking contrasts');
     }
     
     if (feedback.includes('darker') || feedback.includes('moody')) {
@@ -202,30 +124,28 @@ function applyEnhancedRefinement(originalDescription: string, userFeedback: stri
       refinedDescription = refinedDescription.replace(/dark|moody|dramatic/gi, 'bright, luminous');
     }
     
-    // Quality and detail level
+    if (feedback.includes('more detail') || feedback.includes('detailed')) {
+      refinedDescription += ' Additional intricate details include fine textures, subtle gradations, and carefully rendered surface materials.';
+    }
+    
     if (feedback.includes('simple') || feedback.includes('minimal')) {
-      refinedDescription = refinedDescription.replace(/incredible detail|intricate|complex/gi, 'clean, simple');
+      refinedDescription = refinedDescription.replace(/detailed|intricate|complex/gi, 'clean, minimalist');
     }
     
-    // Specific attribute changes
-    if (feedback.includes('dress') || feedback.includes('clothing')) {
-      // Keep the clothing feedback for later incorporation
+    // Add specific feedback elements
+    if (feedback.includes('background')) {
+      refinedDescription += ` The background is specifically modified based on user feedback: ${userFeedback}.`;
     }
     
-    // Remove contradictory technical details if style changed
-    if (feedback.includes('whimsical') || feedback.includes('cartoon')) {
-      refinedDescription = refinedDescription.replace(/individual fur textures and expressive eyes\./gi, 'cute, expressive cartoon features.');
-      refinedDescription = refinedDescription.replace(/careful attention to shadows, highlights, and mid-tones/gi, 'bright, cheerful coloring');
-    }
-    
-    // Add the user feedback naturally
-    refinedDescription += ` Incorporating user preferences: ${userFeedback}.`;
+    // Always append a note about incorporating feedback
+    refinedDescription += ` This refined version incorporates the user's feedback: "${userFeedback}" to better match their vision.`;
     
     return refinedDescription;
     
   } catch (error) {
-    console.error("Error in enhanced refinement:", error);
-    return `${originalDescription} Modified based on user feedback: ${userFeedback}`;
+    console.error("Error refining description:", error);
+    // Fallback to simple concatenation
+    return `${originalDescription}\n\nRefined based on feedback: ${userFeedback}`;
   }
 }
 
