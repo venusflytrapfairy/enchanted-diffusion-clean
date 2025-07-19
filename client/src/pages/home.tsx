@@ -158,23 +158,23 @@ export default function Home() {
         <div className="container mx-auto px-6">
           <div className="text-center">
             <h1 className="text-6xl md:text-8xl font-cyber font-black holographic mb-4 animate-glow">
-              ✨ AI Image Gen 2K ✨
+              💖 AI Image Gen 2K 💖
             </h1>
-            <p className="text-xl md:text-2xl text-cyan-300 font-light tracking-wide">
-              sustainable • collaborative • totally rad
+            <p className="text-xl md:text-2xl text-bubble-pink font-light tracking-wide">
+              sustainable • collaborative • totally cute ✨
             </p>
             <div className="flex justify-center items-center mt-6 space-x-4">
               <div className="flex items-center glass-effect px-4 py-2 rounded-full">
-                <i className="fas fa-leaf text-lime-pop mr-2"></i>
-                <span className="text-sm">Eco-Friendly</span>
+                <span className="text-lime-pop mr-2">🌸</span>
+                <span className="text-sm text-bubble-pink">Eco-Friendly</span>
               </div>
               <div className="flex items-center glass-effect px-4 py-2 rounded-full">
-                <i className="fas fa-robot text-cyber-pink mr-2"></i>
-                <span className="text-sm">AI Powered</span>
+                <span className="text-cyber-pink mr-2">💫</span>
+                <span className="text-sm text-candy-pink">AI Powered</span>
               </div>
               <div className="flex items-center glass-effect px-4 py-2 rounded-full">
-                <i className="fas fa-users text-neon-cyan mr-2"></i>
-                <span className="text-sm">Collaborative</span>
+                <span className="text-princess-purple mr-2">💕</span>
+                <span className="text-sm text-barbie-pink">Collaborative</span>
               </div>
             </div>
           </div>
@@ -185,7 +185,7 @@ export default function Home() {
       <section className="relative z-10 py-12">
         <div className="container mx-auto px-6">
           <h2 className="text-3xl md:text-4xl font-cyber font-bold text-center mb-12 holographic">
-            The Future of Image Generation
+            💫 The Future of Cute Image Generation 💫
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-16">
             <div className="workflow-step text-center">
@@ -193,8 +193,8 @@ export default function Home() {
                 <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-gradient-to-r from-cyber-pink to-electric-purple flex items-center justify-center animate-pulse-slow">
                   <i className="fas fa-keyboard text-3xl text-white"></i>
                 </div>
-                <h3 className="text-xl font-cyber font-bold mb-2 text-cyber-pink">PROMPT</h3>
-                <p className="text-sm text-gray-300">Enter your creative vision</p>
+                <h3 className="text-xl font-cyber font-bold mb-2 text-cyber-pink">✨ PROMPT ✨</h3>
+                <p className="text-sm text-bubble-pink">Share your dreamy vision</p>
               </div>
             </div>
             <div className="workflow-step text-center">
@@ -202,8 +202,8 @@ export default function Home() {
                 <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-gradient-to-r from-neon-cyan to-lime-pop flex items-center justify-center animate-pulse-slow">
                   <i className="fas fa-brain text-3xl text-white"></i>
                 </div>
-                <h3 className="text-xl font-cyber font-bold mb-2 text-neon-cyan">DESCRIBE</h3>
-                <p className="text-sm text-gray-300">AI creates detailed description</p>
+                <h3 className="text-xl font-cyber font-bold mb-2 text-candy-pink">💖 DESCRIBE 💖</h3>
+                <p className="text-sm text-princess-purple">AI creates magical description</p>
               </div>
             </div>
             <div className="workflow-step text-center">
@@ -211,8 +211,8 @@ export default function Home() {
                 <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-gradient-to-r from-electric-purple to-cyber-pink flex items-center justify-center animate-pulse-slow">
                   <i className="fas fa-thumbs-up text-3xl text-white"></i>
                 </div>
-                <h3 className="text-xl font-cyber font-bold mb-2 text-electric-purple">APPROVE</h3>
-                <p className="text-sm text-gray-300">Review and refine together</p>
+                <h3 className="text-xl font-cyber font-bold mb-2 text-electric-purple">🌟 APPROVE 🌟</h3>
+                <p className="text-sm text-candy-pink">Review and make it perfect</p>
               </div>
             </div>
             <div className="workflow-step text-center">
@@ -220,8 +220,8 @@ export default function Home() {
                 <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-gradient-to-r from-lime-pop to-neon-cyan flex items-center justify-center animate-pulse-slow">
                   <i className="fas fa-image text-3xl text-white"></i>
                 </div>
-                <h3 className="text-xl font-cyber font-bold mb-2 text-lime-pop">GENERATE</h3>
-                <p className="text-sm text-gray-300">Perfect image, first try!</p>
+                <h3 className="text-xl font-cyber font-bold mb-2 text-lime-pop">✨ GENERATE ✨</h3>
+                <p className="text-sm text-barbie-pink">Perfect image, first try!</p>
               </div>
             </div>
           </div>
@@ -240,7 +240,7 @@ export default function Home() {
                   <div className="w-12 h-12 rounded-full bg-gradient-to-r from-cyber-pink to-electric-purple flex items-center justify-center mr-4 animate-glow">
                     <span className="text-2xl font-cyber font-black">1</span>
                   </div>
-                  <h2 className="text-3xl font-cyber font-bold holographic">Tell me your vision</h2>
+                  <h2 className="text-3xl font-cyber font-bold holographic">✨ Tell me your dreamy vision ✨</h2>
                 </div>
                 
                 <div className="relative mb-6">
