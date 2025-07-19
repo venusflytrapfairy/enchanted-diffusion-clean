@@ -349,7 +349,7 @@ export default function Home() {
           )}
 
           {/* Step 3: Image Generation */}
-          {session && (session.status === "generating" || session.status === "completed" || generateImageMutation.isPending) && (
+          {session && (session.status === "generating" || session.status === "completed") && (
             <Card className="glass-effect rounded-3xl p-8 mb-8 neon-border">
               <CardContent className="p-0">
                 <div className="flex items-center mb-6">
