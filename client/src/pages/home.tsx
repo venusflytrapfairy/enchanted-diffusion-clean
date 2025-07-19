@@ -161,7 +161,7 @@ export default function Home() {
               💖 AI Image Gen 2K 💖
             </h1>
             <p className="text-xl md:text-2xl text-bubble-pink font-light tracking-wide">
-              sustainable • collaborative • totally cute ✨
+              sustainable • AI x Human collaboration ✨
             </p>
             <div className="flex justify-center items-center mt-6 space-x-4">
               <div className="flex items-center glass-effect px-4 py-2 rounded-full">
@@ -194,7 +194,7 @@ export default function Home() {
                   <i className="fas fa-keyboard text-3xl text-white"></i>
                 </div>
                 <h3 className="text-xl font-cyber font-bold mb-2 text-cyber-pink">✨ PROMPT ✨</h3>
-                <p className="text-sm text-bubble-pink">Share your dreamy vision</p>
+                <p className="text-sm text-bubble-pink">Share your image vision</p>
               </div>
             </div>
             <div className="workflow-step text-center">
@@ -240,7 +240,7 @@ export default function Home() {
                   <div className="w-12 h-12 rounded-full bg-gradient-to-r from-cyber-pink to-electric-purple flex items-center justify-center mr-4 animate-glow">
                     <span className="text-2xl font-cyber font-black">1</span>
                   </div>
-                  <h2 className="text-3xl font-cyber font-bold holographic">✨ Tell me your dreamy vision ✨</h2>
+                  <h2 className="text-3xl font-cyber font-bold holographic">✨ Tell me your image vision ✨</h2>
                 </div>
                 
                 <div className="relative mb-6">
