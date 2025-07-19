@@ -2,7 +2,7 @@ import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { insertSessionSchema, updateSessionSchema } from "@shared/schema";
-import { generateImageDescription, refineImageDescription, generateImage } from "./services/openai";
+import { generateImageDescription, refineImageDescription, generateImage } from "./services/huggingface";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Create a new image generation session
