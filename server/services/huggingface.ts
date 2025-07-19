@@ -151,70 +151,100 @@ export async function refineImageDescription(originalDescription: string, userFe
 
 // Generate image using Hugging Face Stable Diffusion
 export async function generateImage(description: string): Promise<{ url: string }> {
-  try {
-    // Use Hugging Face's free Stable Diffusion model
-    const response = await hf.textToImage({
-      model: 'stabilityai/stable-diffusion-2-1',
-      inputs: description,
-      parameters: {
-        negative_prompt: "blurry, bad quality, distorted, deformed",
-        num_inference_steps: 30,
-        guidance_scale: 7.5,
-        width: 1024,
-        height: 1024
-      }
-    });
+  console.log("Starting image generation for:", description);
+  
+  // Try multiple models that are available on Hugging Face free inference
+  const models = [
+    'runwayml/stable-diffusion-v1-5',
+    'CompVis/stable-diffusion-v1-4',
+    'stabilityai/stable-diffusion-2-base'
+  ];
 
-    // Convert blob to data URL for immediate display
-    const arrayBuffer = await response.arrayBuffer();
-    const base64 = Buffer.from(arrayBuffer).toString('base64');
-    const dataUrl = `data:image/png;base64,${base64}`;
-    
-    return { url: dataUrl };
-    
-  } catch (error) {
-    console.error("Error generating image with Hugging Face:", error);
-    
-    // If HF fails, try the free inference API endpoint
+  for (const model of models) {
     try {
-      const fallbackResponse = await fetch(
-        "https://api-inference.huggingface.co/models/stabilityai/stable-diffusion-2-1",
+      console.log(`Trying model: ${model}`);
+      
+      const response = await fetch(
+        `https://api-inference.huggingface.co/models/${model}`,
         {
           headers: {
-            Authorization: `Bearer ${process.env.HUGGINGFACE_API_KEY || 'hf_placeholder'}`,
+            Authorization: `Bearer ${process.env.HUGGINGFACE_API_KEY}`,
             "Content-Type": "application/json",
           },
           method: "POST",
           body: JSON.stringify({
             inputs: description,
             parameters: {
-              negative_prompt: "blurry, bad quality, distorted",
-              num_inference_steps: 20,
+              negative_prompt: "blurry, bad quality, distorted, deformed, ugly",
+              num_inference_steps: 50,
               guidance_scale: 7.5
             }
           }),
         }
       );
 
-      if (!fallbackResponse.ok) {
-        throw new Error(`HTTP error! status: ${fallbackResponse.status}`);
-      }
+      console.log(`Response status for ${model}:`, response.status);
 
-      const imageBlob = await fallbackResponse.blob();
-      const arrayBuffer = await imageBlob.arrayBuffer();
-      const base64 = Buffer.from(arrayBuffer).toString('base64');
-      const dataUrl = `data:image/png;base64,${base64}`;
-      
-      return { url: dataUrl };
-      
-    } catch (fallbackError) {
-      console.error("Fallback image generation also failed:", fallbackError);
-      
-      // Final fallback: generate a proper SVG representation
-      const svgImage = generateDescriptiveImage(description);
-      return { url: svgImage };
+      if (response.ok) {
+        const imageBlob = await response.blob();
+        console.log(`Successfully generated image with ${model}, blob size:`, imageBlob.size);
+        
+        if (imageBlob.size > 0) {
+          const arrayBuffer = await imageBlob.arrayBuffer();
+          const base64 = Buffer.from(arrayBuffer).toString('base64');
+          const dataUrl = `data:image/png;base64,${base64}`;
+          
+          console.log("Image data URL created successfully");
+          return { url: dataUrl };
+        }
+      } else {
+        const errorText = await response.text();
+        console.log(`Error from ${model}:`, errorText);
+        
+        // If model is loading, wait and retry
+        if (errorText.includes('loading')) {
+          console.log(`Model ${model} is loading, waiting 20 seconds...`);
+          await new Promise(resolve => setTimeout(resolve, 20000));
+          
+          // Retry once after waiting
+          const retryResponse = await fetch(
+            `https://api-inference.huggingface.co/models/${model}`,
+            {
+              headers: {
+                Authorization: `Bearer ${process.env.HUGGINGFACE_API_KEY}`,
+                "Content-Type": "application/json",
+              },
+              method: "POST",
+              body: JSON.stringify({
+                inputs: description,
+                parameters: {
+                  negative_prompt: "blurry, bad quality, distorted, deformed",
+                  num_inference_steps: 30
+                }
+              }),
+            }
+          );
+
+          if (retryResponse.ok) {
+            const imageBlob = await retryResponse.blob();
+            if (imageBlob.size > 0) {
+              const arrayBuffer = await imageBlob.arrayBuffer();
+              const base64 = Buffer.from(arrayBuffer).toString('base64');
+              return { url: `data:image/png;base64,${base64}` };
+            }
+          }
+        }
+      }
+    } catch (error) {
+      console.error(`Error with model ${model}:`, error);
+      continue;
     }
   }
+
+  console.log("All models failed, generating fallback SVG");
+  // If all models fail, generate a descriptive SVG
+  const svgImage = generateDescriptiveImage(description);
+  return { url: svgImage };
 }
 
 // Generate a descriptive SVG when AI services are unavailable
