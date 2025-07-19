@@ -173,8 +173,13 @@ export async function generateImage(description: string): Promise<{ url: string 
     console.log("Successfully generated image with HF client");
     return { url: dataUrl };
     
-  } catch (hfError) {
+  } catch (hfError: any) {
     console.error("HuggingFace client failed:", hfError);
+    
+    // Check if it's a quota/credit issue
+    if (hfError.message?.includes('credits') || hfError.message?.includes('PRO') || hfError.httpResponse?.status === 402) {
+      console.log("Quota exceeded - your teammate's Hugging Face account needs PRO subscription");
+    }
   }
 
   // Try Stable Diffusion 3.5 Large via direct API call
@@ -263,13 +268,41 @@ export async function generateImage(description: string): Promise<{ url: string 
     }
   }
 
-  console.log("All models failed, generating fallback SVG");
-  // If all models fail, generate a descriptive SVG
-  const svgImage = generateDescriptiveImage(description);
+  console.log("All models failed - Hugging Face account needs PRO subscription");
+  // Generate informative SVG about upgrade requirement
+  const svgImage = generateUpgradeRequiredImage(description);
   return { url: svgImage };
 }
 
-// Generate a descriptive SVG when AI services are unavailable
+// Generate an informative SVG about upgrade requirement
+function generateUpgradeRequiredImage(description: string): string {
+  const svg = `
+    <svg width="1024" height="1024" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#ff1493;stop-opacity:1" />
+          <stop offset="50%" style="stop-color:#e91e63;stop-opacity:1" />
+          <stop offset="100%" style="stop-color:#d946ef;stop-opacity:1" />
+        </linearGradient>
+        <linearGradient id="text" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#ffffff;stop-opacity:1" />
+          <stop offset="100%" style="stop-color:#ffcce5;stop-opacity:1" />
+        </linearGradient>
+      </defs>
+      <rect width="1024" height="1024" fill="url(#bg)"/>
+      <circle cx="512" cy="300" r="80" fill="rgba(255,255,255,0.2)"/>
+      <circle cx="300" cy="500" r="40" fill="rgba(255,255,255,0.15)"/>
+      <circle cx="700" cy="600" r="60" fill="rgba(255,255,255,0.1)"/>
+      <text x="512" y="400" font-family="Arial, sans-serif" font-size="44" font-weight="bold" fill="url(#text)" text-anchor="middle">Upgrade Needed</text>
+      <text x="512" y="460" font-family="Arial, sans-serif" font-size="28" fill="rgba(255,255,255,0.9)" text-anchor="middle">Hugging Face PRO Required</text>
+      <text x="512" y="520" font-family="Arial, sans-serif" font-size="20" fill="rgba(255,255,255,0.8)" text-anchor="middle">for Stable Diffusion 3.5 Large</text>
+      <text x="512" y="650" font-family="Arial, sans-serif" font-size="18" fill="rgba(255,255,255,0.6)" text-anchor="middle">💖 Upgrade at huggingface.co/pricing 💖</text>
+    </svg>`;
+  
+  return `data:image/svg+xml;base64,${Buffer.from(svg).toString('base64')}`;
+}
+
+// Generate a descriptive SVG when AI services are unavailable (backup function)
 function generateDescriptiveImage(description: string): string {
   const colors = ['#ff69b4', '#00ffff', '#ff00ff', '#32cd32', '#ffd700'];
   const bgColor = colors[Math.floor(Math.random() * colors.length)];
