@@ -292,11 +292,22 @@ export default function Home() {
                   <>
                     <div className="bg-black bg-opacity-30 rounded-2xl p-6 mb-6 border-2 border-neon-cyan">
                       <h3 className="text-lg font-cyber font-bold text-neon-cyan mb-3">
-                        <i className="fas fa-robot mr-2"></i>AI Description:
+                        <i className="fas fa-robot mr-2"></i>
+                        {session.userFeedback ? "Refined AI Description:" : "AI Description:"}
                       </h3>
                       <p className="text-lg leading-relaxed text-gray-100">
                         {session.aiDescription}
                       </p>
+                      {session.userFeedback && (
+                        <div className="mt-4 pt-4 border-t border-electric-purple border-opacity-30">
+                          <p className="text-sm text-electric-purple mb-2">
+                            <i className="fas fa-edit mr-1"></i>Your feedback: "{session.userFeedback}"
+                          </p>
+                          <p className="text-xs text-gray-400">
+                            The description above has been refined based on your feedback.
+                          </p>
+                        </div>
+                      )}
                     </div>
                     
                     {/* Feedback Interface */}

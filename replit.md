@@ -60,11 +60,19 @@ Preferred communication style: Simple, everyday language.
 
 ### Image Generation Workflow
 1. **User Input**: User provides initial prompt
-2. **AI Enhancement**: OpenAI generates detailed description from prompt
+2. **AI Enhancement**: Local AI generates detailed description from prompt (using smart fallback system)
 3. **User Refinement**: User can provide feedback to improve description
-4. **AI Refinement**: OpenAI refines description based on feedback
-5. **Image Generation**: Final description used to generate image
-6. **Completion**: Session marked as completed with metrics (energy/time saved)
+4. **AI Refinement**: System refines description based on feedback, storing it as finalDescription
+5. **User Approval**: User must approve the final description before image generation
+6. **Image Generation**: Stable Diffusion 3.5 Large generates image using finalDescription or aiDescription
+7. **Completion**: Session marked as completed with metrics (energy/time saved)
+
+### Recent Changes (July 19, 2025)
+- Fixed human-in-the-loop workflow to properly incorporate user feedback
+- Integrated Hugging Face Stable Diffusion 3.5 Large for real AI image generation
+- Added proper fallback systems for when AI services are unavailable
+- Improved description refinement logic to use finalDescription consistently
+- Enhanced UI to show when descriptions have been refined based on user feedback
 
 ### State Management
 - **Server State**: Managed by TanStack Query with automatic caching and synchronization

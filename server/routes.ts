@@ -117,9 +117,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(404).json({ error: "Session not found" });
       }
 
+      // Use finalDescription if available (means user refined it), otherwise use aiDescription
       const description = session.finalDescription || session.aiDescription;
       if (!description) {
         return res.status(400).json({ error: "No description found for image generation" });
+      }
+
+      console.log("Generating image with description:", description);
+
+      // If finalDescription doesn't exist yet, set it to the current description being used
+      if (!session.finalDescription) {
+        await storage.updateSession(id, { finalDescription: description });
       }
 
       // Update status to generating
