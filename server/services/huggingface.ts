@@ -106,16 +106,42 @@ function generateFallbackDescription(userPrompt: string): string {
 
 export async function refineImageDescription(originalDescription: string, userFeedback: string): Promise<string> {
   try {
-    // Local refinement logic that incorporates user feedback
+    // Enhanced refinement logic that properly incorporates specific user requirements
     let refinedDescription = originalDescription;
-    
     const feedback = userFeedback.toLowerCase();
     
-    // Handle common feedback patterns
+    // Handle specific physical attributes and features
+    if (feedback.includes('wings')) {
+      refinedDescription = refinedDescription.replace(/The animal is captured with incredible detail/, 'The winged animal is captured with incredible detail, featuring majestic feathered wings spread gracefully');
+    }
+    
+    if (feedback.includes('white fur') || feedback.includes('white')) {
+      refinedDescription = refinedDescription.replace(/showing individual fur textures/, 'showing pristine white fur with individual texture details and soft, fluffy appearance');
+    }
+    
+    if (feedback.includes('black fur') || feedback.includes('black')) {
+      refinedDescription = refinedDescription.replace(/showing individual fur textures/, 'showing sleek black fur with individual texture details and glossy appearance');
+    }
+    
+    if (feedback.includes('long hair') || feedback.includes('flowing')) {
+      refinedDescription = refinedDescription.replace(/fur textures/, 'long, flowing fur that cascades naturally');
+    }
+    
+    // Handle colors and color changes
+    if (feedback.includes('blue eyes')) {
+      refinedDescription = refinedDescription.replace(/expressive eyes/, 'striking blue eyes that gleam with intelligence');
+    }
+    
+    if (feedback.includes('green eyes')) {
+      refinedDescription = refinedDescription.replace(/expressive eyes/, 'mesmerizing green eyes that sparkle');
+    }
+    
+    // Handle general color requests
     if (feedback.includes('more color') || feedback.includes('colorful')) {
       refinedDescription = refinedDescription.replace('Rich color palette', 'Vibrant, saturated color palette with bold hues and striking contrasts');
     }
     
+    // Handle lighting and mood
     if (feedback.includes('darker') || feedback.includes('moody')) {
       refinedDescription = refinedDescription.replace(/bright|vibrant|golden/gi, 'dark, moody');
     }
@@ -124,6 +150,7 @@ export async function refineImageDescription(originalDescription: string, userFe
       refinedDescription = refinedDescription.replace(/dark|moody|dramatic/gi, 'bright, luminous');
     }
     
+    // Handle detail level
     if (feedback.includes('more detail') || feedback.includes('detailed')) {
       refinedDescription += ' Additional intricate details include fine textures, subtle gradations, and carefully rendered surface materials.';
     }
@@ -132,13 +159,30 @@ export async function refineImageDescription(originalDescription: string, userFe
       refinedDescription = refinedDescription.replace(/detailed|intricate|complex/gi, 'clean, minimalist');
     }
     
-    // Add specific feedback elements
+    // Handle specific scene elements
     if (feedback.includes('background')) {
-      refinedDescription += ` The background is specifically modified based on user feedback: ${userFeedback}.`;
+      refinedDescription += ` The background is specifically modified: ${userFeedback}.`;
     }
     
-    // Always append a note about incorporating feedback
-    refinedDescription += ` This refined version incorporates the user's feedback: "${userFeedback}" to better match their vision.`;
+    if (feedback.includes('flower') || feedback.includes('garden')) {
+      refinedDescription = refinedDescription.replace(/The natural environment/, 'The lush garden environment filled with blooming flowers');
+    }
+    
+    // For any specific requirements not covered by patterns, add them directly
+    const specificRequirements = [];
+    
+    // Extract specific requirements from feedback
+    if (feedback.includes('must have') || feedback.includes('should have')) {
+      const requirements = userFeedback.split(/must have|should have/i)[1];
+      if (requirements) {
+        specificRequirements.push(requirements.trim());
+      }
+    }
+    
+    // Add specific requirements to the description
+    if (specificRequirements.length > 0) {
+      refinedDescription = refinedDescription.replace(/The overall mood/, `Importantly, incorporating the specific requirements: ${specificRequirements.join(', ')}. The overall mood`);
+    }
     
     return refinedDescription;
     

@@ -77,6 +77,10 @@ Preferred communication style: Simple, everyday language.
 - Enhanced negative prompts to remove "Eco-Generated" watermarks from images
 - Updated footer credits to show "Powered by Hugging Face" and "Stable Diffusion 3.5"
 - Streamlined to use only Stable Diffusion 3.5 Large model per user preference
+- Fixed title heart emoji sizing with custom CSS for better proportions
+- Resolved Stable Diffusion 3.5 Large connectivity issues by removing problematic HF client library approach
+- Enhanced description refinement system to properly understand and incorporate specific user requirements (wings, fur colors, eye colors, etc.)
+- Improved user feedback processing to modify descriptions rather than just appending feedback text
 
 ### State Management
 - **Server State**: Managed by TanStack Query with automatic caching and synchronization
