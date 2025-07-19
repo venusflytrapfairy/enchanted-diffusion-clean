@@ -153,11 +153,36 @@ export async function refineImageDescription(originalDescription: string, userFe
 export async function generateImage(description: string): Promise<{ url: string }> {
   console.log("Starting image generation for:", description);
   
-  // Try multiple models that are available on Hugging Face free inference
+  // First try using the HuggingFace client directly for SD 3.5
+  try {
+    console.log("Trying HuggingFace client with stabilityai/stable-diffusion-3.5-large");
+    const response = await hf.textToImage({
+      model: 'stabilityai/stable-diffusion-3.5-large',
+      inputs: description,
+      parameters: {
+        negative_prompt: "blurry, bad quality, distorted, deformed, ugly",
+        num_inference_steps: 30,
+        guidance_scale: 7.5
+      }
+    });
+
+    const arrayBuffer = await response.arrayBuffer();
+    const base64 = Buffer.from(arrayBuffer).toString('base64');
+    const dataUrl = `data:image/png;base64,${base64}`;
+    
+    console.log("Successfully generated image with HF client");
+    return { url: dataUrl };
+    
+  } catch (hfError) {
+    console.error("HuggingFace client failed:", hfError);
+  }
+
+  // Try multiple models via direct API calls
   const models = [
-    'runwayml/stable-diffusion-v1-5',
-    'CompVis/stable-diffusion-v1-4',
-    'stabilityai/stable-diffusion-2-base'
+    'stabilityai/stable-diffusion-3.5-large',
+    'black-forest-labs/FLUX.1-dev',
+    'Artples/LAI-ImageGeneration-vSDXL-2',
+    'runwayml/stable-diffusion-v1-5'
   ];
 
   for (const model of models) {
