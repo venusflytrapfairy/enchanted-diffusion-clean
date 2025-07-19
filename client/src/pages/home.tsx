@@ -359,8 +359,8 @@ export default function Home() {
                   <h2 className="text-3xl font-cyber font-bold holographic">Creating Your Magic</h2>
                 </div>
                 
-                {/* Generation Progress */}
-                {(session.status === "generating" || generateImageMutation.isPending) && (
+                {/* Generation Progress - Show when generating OR when mutation is pending */}
+                {(session?.status === "generating" || generateImageMutation.isPending) && (
                   <div className="mb-8">
                     <div className="bg-black bg-opacity-30 rounded-2xl p-6 neon-border">
                       <div className="flex items-center justify-between mb-4">
