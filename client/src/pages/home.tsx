@@ -185,7 +185,7 @@ export default function Home() {
       <section className="relative z-10 py-12">
         <div className="container mx-auto px-6">
           <h2 className="text-3xl md:text-4xl font-cyber font-bold text-center mb-12 holographic">
-            💫 The Future of Cute Image Generation 💫
+            💫 The Future of AI Image Generation 💫
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-16">
             <div className="workflow-step text-center">
