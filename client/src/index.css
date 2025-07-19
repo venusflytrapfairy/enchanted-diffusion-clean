@@ -185,6 +185,11 @@
   100% { box-shadow: 0 0 40px var(--neon-cyan), 0 0 60px var(--electric-purple); }
 }
 
+@keyframes progress-fill {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
 .animate-pulse-slow {
   animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }

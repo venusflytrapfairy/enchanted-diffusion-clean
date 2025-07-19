@@ -339,7 +339,7 @@ export default function Home() {
                         disabled={isLoading || !userFeedback.trim()}
                       >
                         <i className="fas fa-sync mr-2"></i>
-                        Refine Description
+                        {refineDescriptionMutation.isPending ? "Refining..." : "Refine Description"}
                       </Button>
                     </div>
                   </>
@@ -362,23 +362,49 @@ export default function Home() {
                 {/* Generation Progress */}
                 {session.status === "generating" && (
                   <div className="mb-8">
-                    <div className="bg-black bg-opacity-30 rounded-2xl p-6">
+                    <div className="bg-black bg-opacity-30 rounded-2xl p-6 neon-border">
                       <div className="flex items-center justify-between mb-4">
-                        <span className="font-cyber text-lg">Generation Progress</span>
-                        <span className="text-neon-cyan font-cyber">Processing...</span>
+                        <span className="font-cyber text-lg text-neon-cyan">AI Image Generation</span>
+                        <span className="text-electric-purple font-cyber animate-pulse">Processing...</span>
                       </div>
-                      <Progress value={75} className="w-full h-4 mb-4" />
-                      <div className="text-center">
-                        <p className="text-gray-300 mb-2">DALL-E is working its magic...</p>
-                        <div className="flex items-center justify-center space-x-4 text-sm">
-                          <div className="flex items-center text-lime-pop">
-                            <i className="fas fa-leaf mr-2"></i>
-                            <span>Energy Saved: 67%</span>
-                          </div>
-                          <div className="flex items-center text-neon-cyan">
-                            <i className="fas fa-clock mr-2"></i>
-                            <span>Est. Time: 30s</span>
-                          </div>
+                      
+                      {/* Animated Progress Bar */}
+                      <div className="w-full bg-gray-700 rounded-full h-4 mb-4 overflow-hidden relative">
+                        <div className="h-full bg-gradient-to-r from-cyber-pink via-electric-purple to-neon-cyan rounded-full animate-pulse"></div>
+                        <div className="absolute inset-0 h-full bg-gradient-to-r from-transparent via-white to-transparent opacity-30 rounded-full animate-bounce-gentle"></div>
+                      </div>
+                      
+                      {/* Generation Status */}
+                      <div className="text-center mb-4">
+                        <div className="flex items-center justify-center mb-3">
+                          <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-cyber-pink mr-3"></div>
+                          <p className="text-gray-300 font-cyber">Stable Diffusion is creating your masterpiece...</p>
+                        </div>
+                        
+                        {/* Final Description Being Used */}
+                        <div className="bg-electric-purple bg-opacity-20 rounded-lg p-4 mb-4">
+                          <h4 className="text-sm font-cyber text-electric-purple mb-2">
+                            <i className="fas fa-magic mr-1"></i>Using Description:
+                          </h4>
+                          <p className="text-xs text-gray-300 leading-relaxed">
+                            {session.finalDescription || session.aiDescription}
+                          </p>
+                        </div>
+                      </div>
+                      
+                      {/* Environmental Impact */}
+                      <div className="flex items-center justify-center space-x-6 text-sm">
+                        <div className="flex items-center text-lime-pop">
+                          <i className="fas fa-leaf mr-2"></i>
+                          <span>Energy Optimized</span>
+                        </div>
+                        <div className="flex items-center text-neon-cyan">
+                          <i className="fas fa-recycle mr-2"></i>
+                          <span>Sustainable AI</span>
+                        </div>
+                        <div className="flex items-center text-cyber-pink">
+                          <i className="fas fa-heart mr-2"></i>
+                          <span>Human-Approved</span>
                         </div>
                       </div>
                     </div>
