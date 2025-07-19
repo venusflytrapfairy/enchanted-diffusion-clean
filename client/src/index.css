@@ -56,6 +56,12 @@
   font-family: 'Orbitron', 'Courier New', monospace;
 }
 
+/* Custom emoji sizing for title */
+.title-emojis {
+  font-size: 0.6em; /* Makes emojis smaller relative to the text */
+  vertical-align: middle;
+}
+
 .font-bubble {
   font-family: 'Comfortaa', 'Inter', sans-serif;
 }

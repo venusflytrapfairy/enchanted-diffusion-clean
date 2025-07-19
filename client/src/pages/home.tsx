@@ -158,7 +158,7 @@ export default function Home() {
         <div className="container mx-auto px-6">
           <div className="text-center">
             <h1 className="text-6xl md:text-8xl font-cyber font-black holographic mb-4 animate-glow">
-              💖 AI Image Gen 2K 💖
+              <span className="title-emojis">💖</span> AI Image Gen 2K <span className="title-emojis">💖</span>
             </h1>
             <p className="text-xl md:text-2xl text-bubble-pink font-light tracking-wide">
               sustainable • AI x Human collaboration ✨
