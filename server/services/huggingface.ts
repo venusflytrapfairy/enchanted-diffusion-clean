@@ -182,9 +182,12 @@ export async function generateImage(description: string): Promise<{ url: string 
     }
   }
 
-  // Try Stable Diffusion 3.5 Large via direct API call
+  // Try multiple models, starting with free options and falling back to premium
   const models = [
-    'stabilityai/stable-diffusion-3.5-large'
+    'black-forest-labs/FLUX.1-schnell',     // Free, fast model  
+    'stabilityai/stable-diffusion-xl-base-1.0', // Free SD XL
+    'runwayml/stable-diffusion-v1-5',       // Free classic SD
+    'stabilityai/stable-diffusion-3.5-large' // Premium model (requires PRO)
   ];
 
   for (const model of models) {
