@@ -152,42 +152,10 @@ export async function refineImageDescription(originalDescription: string, userFe
 // Generate image using Hugging Face Stable Diffusion
 export async function generateImage(description: string): Promise<{ url: string }> {
   console.log("Starting image generation for:", description);
-  
-  // First try using the HuggingFace client directly for SD 3.5
-  try {
-    console.log("Trying HuggingFace client with stabilityai/stable-diffusion-3.5-large");
-    const response = await hf.textToImage({
-      model: 'stabilityai/stable-diffusion-3.5-large',
-      inputs: description,
-      parameters: {
-        negative_prompt: "blurry, bad quality, distorted, deformed, ugly, text, watermark, logo, words, letters, writing, eco generated, eco-generated, watermarks, signatures, labels, badges, stamps, overlay text, corner text",
-        num_inference_steps: 30,
-        guidance_scale: 7.5
-      }
-    });
 
-    const arrayBuffer = await response.arrayBuffer();
-    const base64 = Buffer.from(arrayBuffer).toString('base64');
-    const dataUrl = `data:image/png;base64,${base64}`;
-    
-    console.log("Successfully generated image with HF client");
-    return { url: dataUrl };
-    
-  } catch (hfError: any) {
-    console.error("HuggingFace client failed:", hfError);
-    
-    // Check if it's a quota/credit issue
-    if (hfError.message?.includes('credits') || hfError.message?.includes('PRO') || hfError.httpResponse?.status === 402) {
-      console.log("Quota exceeded - your teammate's Hugging Face account needs PRO subscription");
-    }
-  }
-
-  // Try multiple models, starting with free options and falling back to premium
+  // Try Stable Diffusion 3.5 Large via direct API call
   const models = [
-    'black-forest-labs/FLUX.1-schnell',     // Free, fast model  
-    'stabilityai/stable-diffusion-xl-base-1.0', // Free SD XL
-    'runwayml/stable-diffusion-v1-5',       // Free classic SD
-    'stabilityai/stable-diffusion-3.5-large' // Premium model (requires PRO)
+    'stabilityai/stable-diffusion-3.5-large'
   ];
 
   for (const model of models) {
