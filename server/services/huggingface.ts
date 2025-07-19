@@ -160,7 +160,7 @@ export async function generateImage(description: string): Promise<{ url: string 
       model: 'stabilityai/stable-diffusion-3.5-large',
       inputs: description,
       parameters: {
-        negative_prompt: "blurry, bad quality, distorted, deformed, ugly",
+        negative_prompt: "blurry, bad quality, distorted, deformed, ugly, text, watermark, logo, words, letters, writing, eco generated",
         num_inference_steps: 30,
         guidance_scale: 7.5
       }
@@ -200,7 +200,7 @@ export async function generateImage(description: string): Promise<{ url: string 
           body: JSON.stringify({
             inputs: description,
             parameters: {
-              negative_prompt: "blurry, bad quality, distorted, deformed, ugly",
+              negative_prompt: "blurry, bad quality, distorted, deformed, ugly, text, watermark, logo, words, letters, writing, eco generated",
               num_inference_steps: 50,
               guidance_scale: 7.5
             }
@@ -243,7 +243,7 @@ export async function generateImage(description: string): Promise<{ url: string 
               body: JSON.stringify({
                 inputs: description,
                 parameters: {
-                  negative_prompt: "blurry, bad quality, distorted, deformed",
+                  negative_prompt: "blurry, bad quality, distorted, deformed, text, watermark, logo, words, letters, writing, eco generated",
                   num_inference_steps: 30
                 }
               }),

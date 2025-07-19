@@ -360,7 +360,7 @@ export default function Home() {
                 </div>
                 
                 {/* Generation Progress */}
-                {session.status === "generating" && (
+                {(session.status === "generating" || generateImageMutation.isPending) && (
                   <div className="mb-8">
                     <div className="bg-black bg-opacity-30 rounded-2xl p-6 neon-border">
                       <div className="flex items-center justify-between mb-4">
@@ -523,11 +523,11 @@ export default function Home() {
           <div className="flex justify-center items-center mb-6 space-x-8">
             <div className="flex items-center text-sm">
               <i className="fas fa-robot text-cyber-pink mr-2"></i>
-              <span>Powered by OpenAI</span>
+              <span>Powered by Hugging Face</span>
             </div>
             <div className="flex items-center text-sm">
               <i className="fas fa-image text-neon-cyan mr-2"></i>
-              <span>DALL-E 3</span>
+              <span>Stable Diffusion 3.5</span>
             </div>
             <div className="flex items-center text-sm">
               <i className="fas fa-code text-lime-pop mr-2"></i>
