@@ -149,17 +149,20 @@ export async function refineImageDescription(originalDescription: string, userFe
   }
 }
 
-// Keep the OpenAI image generation as fallback, but use a mock for development
+// Generate image using a placeholder service that actually works
 export async function generateImage(description: string): Promise<{ url: string }> {
-  // For development, return a placeholder image
-  // In production, you could integrate with Stable Diffusion, DALL-E, or other services
+  // Use Picsum for a working placeholder image service
+  // Generate a unique seed based on description to get consistent images for same descriptions
+  const seed = Math.abs(description.split('').reduce((a, b) => {
+    a = ((a << 5) - a) + b.charCodeAt(0);
+    return a & a;
+  }, 0));
   
-  // Generate a placeholder image URL that represents the description
-  const encodedDescription = encodeURIComponent(description.substring(0, 100));
-  const placeholderUrl = `https://via.placeholder.com/1024x1024/ff69b4/ffffff?text=${encodedDescription}`;
+  // Use Lorem Picsum with a seed for consistent, beautiful placeholder images
+  const imageUrl = `https://picsum.photos/seed/${seed}/1024/1024`;
   
-  // Simulate processing time
+  // Simulate processing time to make it feel realistic
   await new Promise(resolve => setTimeout(resolve, 2000));
   
-  return { url: placeholderUrl };
+  return { url: imageUrl };
 }

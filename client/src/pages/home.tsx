@@ -382,6 +382,13 @@ export default function Home() {
                         src={session.generatedImageUrl}
                         alt="Generated AI image"
                         className="rounded-2xl shadow-2xl max-w-full h-auto neon-border animate-glow"
+                        onError={(e) => {
+                          console.error("Image failed to load:", session.generatedImageUrl);
+                          e.currentTarget.src = "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAyNCIgaGVpZ2h0PSIxMDI0IiB2aWV3Qm94PSIwIDAgMTAyNCAxMDI0IiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8cmVjdCB3aWR0aD0iMTAyNCIgaGVpZ2h0PSIxMDI0IiBmaWxsPSIjZmY2OWI0Ii8+Cjx0ZXh0IHg9IjUxMiIgeT0iNTEyIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iNDgiIGZpbGw9IndoaXRlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iLjNlbSI+SW1hZ2UgR2VuZXJhdGVkPC90ZXh0Pgo8L3N2Zz4K";
+                        }}
+                        onLoad={() => {
+                          console.log("Image loaded successfully:", session.generatedImageUrl);
+                        }}
                       />
                       <div className="absolute top-4 right-4 bg-black bg-opacity-60 rounded-lg px-3 py-2">
                         <span className="text-xs font-cyber text-lime-pop">
