@@ -63,7 +63,7 @@ const MoonbeamMissions = ({ sessionId }: { sessionId: number | null }) => {
   });
 
   const tasks = [
-    { id: 1, label: "Delete 50 unread emails", description: "Reduces data storage needs", reward: 5 },
+    { id: 1, label: "Delete 50 unread emails", description: "Reduce the strain on data centers and lower the associated carbon emissions", reward: 5 },
     { id: 2, label: "Close unused browser tabs", description: "Lowers device CPU use", reward: 2 },
     { id: 3, label: "Switch to dark mode", description: "Saves screen energy", reward: 3 },
     { id: 4, label: "Use a local image instead", description: "Avoids API compute", reward: 10 },
