@@ -415,11 +415,13 @@ export default function Home() {
       <header className="relative z-10 py-8">
         <div className="container mx-auto px-6">
           <div className="text-center mb-8">
-            <h1 className="text-6xl font-magical font-bold fairycore-text mb-4">
-              <span className="title-emojis">🧚</span> Fairycore AI <span className="title-emojis">✨</span>
+            <h1 className="text-6xl font-magical font-bold mb-4">
+              <span className="title-emojis">🧚</span> 
+              <span className="bg-gradient-to-r from-emerald-500 to-pink-500 bg-clip-text text-transparent">Enchanted Diffusion</span> 
+              <span className="title-emojis">✨</span>
             </h1>
             <p className="text-lg font-fairy text-muted-foreground max-w-2xl mx-auto">
-              Where dreams dance with AI magic to create enchanted visions
+              Where human dreams dance with AI magic to create enchanted images
             </p>
           </div>
           
