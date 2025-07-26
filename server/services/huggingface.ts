@@ -4,102 +4,100 @@ const hf = new HfInference(process.env.HUGGINGFACE_API_KEY);
 
 export async function generateImageDescription(userPrompt: string): Promise<string> {
   try {
-    // Use a more descriptive prompt engineering approach without requiring HF API key for basic text generation
-    const enhancedPrompt = `Create a detailed, vivid image description for AI image generation based on this prompt: "${userPrompt}".
-
-The description should include:
-- Visual details and composition
-- Colors, lighting, and atmosphere
-- Style and artistic elements
-- Setting and background
-- Any specific objects or characters
-
-Keep it under 200 words but make it comprehensive and creative.
-
-Detailed description:`;
-
-    // For now, let's use a fallback approach that creates rich descriptions locally
-    // This avoids API quota issues while still providing value
-    const fallbackDescription = await generateFallbackDescription(userPrompt);
-    return fallbackDescription;
+    // Create a magical fairycore-inspired description
+    const fairycoreDescription = await generateFairycoreDescription(userPrompt);
+    return fairycoreDescription;
     
   } catch (error) {
-    console.error("Error generating description with Hugging Face:", error);
+    console.error("Error generating fairycore description:", error);
     // Fallback to local description generation
-    return generateFallbackDescription(userPrompt);
+    return generateFairycoreDescription(userPrompt);
   }
 }
 
-function generateFallbackDescription(userPrompt: string): string {
-  // Create a rich, detailed description based on the user's prompt
-  // This is a sophisticated fallback that analyzes the prompt and expands it
-  
+function generateFairycoreDescription(userPrompt: string): string {
+  // Create a magical fairycore-inspired description
   const prompt = userPrompt.toLowerCase().trim();
   
-  // Basic components for building descriptions
-  const lightingOptions = [
-    "soft golden hour lighting",
-    "dramatic chiaroscuro lighting", 
-    "bright natural lighting",
-    "moody atmospheric lighting",
-    "warm candlelit ambiance",
-    "cool moonlight illumination",
-    "vibrant neon lighting"
+  // Fairycore aesthetic elements
+  const fairyLightingOptions = [
+    "soft ethereal moonbeam lighting filtering through ancient trees",
+    "magical golden hour light with dancing fairy dust particles",
+    "gentle bioluminescent glow from enchanted flowers",
+    "dreamy pastel lighting with sparkles and starlight",
+    "warm candlelit atmosphere with floating orbs of light",
+    "mystical aurora-like colors painting the sky",
+    "delicate morning mist illuminated by forest spirits"
   ];
   
-  const styleOptions = [
-    "hyperrealistic detail",
-    "artistic oil painting style",
-    "digital art rendering", 
-    "watercolor aesthetic",
-    "vintage photography style",
-    "modern minimalist approach",
-    "fantasy art illustration"
+  const fairyStyleOptions = [
+    "whimsical fairytale illustration style",
+    "ethereal watercolor with magical elements",
+    "dreamy cottagecore aesthetic with natural magic",
+    "enchanted forest fantasy art",
+    "soft botanical illustration with fairy elements",
+    "romantic pre-raphaelite painting style",
+    "delicate storybook illustration"
   ];
   
-  const compositionOptions = [
-    "centered composition with shallow depth of field",
-    "dynamic diagonal composition", 
-    "rule of thirds framing",
-    "close-up intimate perspective",
-    "wide establishing shot",
-    "low angle dramatic view",
-    "birds-eye overhead perspective"
+  const fairyColors = [
+    "soft lavender, dusty rose, and mint green tones",
+    "pastel pink, buttercream, and sage green palette",
+    "ethereal blues, lilacs, and pearl white hues",
+    "warm peach, cream, and forest green colors",
+    "gentle mauve, dusty blue, and champagne tints",
+    "magical rainbow pastels with silver accents",
+    "earth tones mixed with fairy dust shimmer"
   ];
   
-  // Randomly select elements to add variety
-  const lighting = lightingOptions[Math.floor(Math.random() * lightingOptions.length)];
-  const style = styleOptions[Math.floor(Math.random() * styleOptions.length)];
-  const composition = compositionOptions[Math.floor(Math.random() * compositionOptions.length)];
+  const fairyElements = [
+    "delicate butterflies, flower petals, and dewdrops",
+    "mushrooms, moss, and tiny magical creatures",
+    "floating sparkles, stardust, and glowing orbs",
+    "wild flowers, ivy vines, and crystal formations",
+    "fairy rings, toadstools, and enchanted flora",
+    "gossamer wings, moonbeams, and celestial magic",
+    "forest spirits, woodland creatures, and nature's wisdom bubbles"
+  ];
   
-  // Analyze prompt for key elements
-  let description = `A beautifully rendered scene featuring ${userPrompt}. `;
+  // Randomly select magical elements
+  const lighting = fairyLightingOptions[Math.floor(Math.random() * fairyLightingOptions.length)];
+  const style = fairyStyleOptions[Math.floor(Math.random() * fairyStyleOptions.length)];
+  const colors = fairyColors[Math.floor(Math.random() * fairyColors.length)];
+  const elements = fairyElements[Math.floor(Math.random() * fairyElements.length)];
   
-  // Add contextual details based on prompt content
-  if (prompt.includes('cat') || prompt.includes('dog') || prompt.includes('animal')) {
-    description += `The animal is captured with incredible detail, showing individual fur textures and expressive eyes. `;
+  // Build magical description
+  let description = `An enchanted fairycore scene featuring ${userPrompt}, rendered with ${style}. `;
+  
+  // Add magical context based on prompt content
+  if (prompt.includes('cat') || prompt.includes('kitten') || prompt.includes('feline')) {
+    description += `A mystical feline creature with soft, luminous fur that seems touched by starlight, surrounded by magical woodland elements. `;
   }
   
-  if (prompt.includes('landscape') || prompt.includes('nature') || prompt.includes('forest') || prompt.includes('mountain')) {
-    description += `The natural environment is lush and detailed with rich textures in foliage and terrain. `;
+  if (prompt.includes('fairy') || prompt.includes('sprite') || prompt.includes('pixie')) {
+    description += `A delicate fairy being with gossamer wings that shimmer like morning dew, floating gracefully among enchanted flowers. `;
   }
   
-  if (prompt.includes('portrait') || prompt.includes('person') || prompt.includes('face')) {
-    description += `The portrait captures subtle facial expressions and emotional depth with careful attention to skin tones and lighting on features. `;
+  if (prompt.includes('forest') || prompt.includes('woods') || prompt.includes('nature')) {
+    description += `An enchanted forest glade where ancient trees whisper secrets and magical creatures dwell in harmony with nature. `;
   }
   
-  if (prompt.includes('city') || prompt.includes('urban') || prompt.includes('building')) {
-    description += `The urban environment features architectural details, street elements, and atmospheric perspective. `;
+  if (prompt.includes('flower') || prompt.includes('rose') || prompt.includes('garden')) {
+    description += `A magical garden where flowers glow with inner light and petals dance on invisible breezes filled with fairy magic. `;
   }
   
-  // Add technical and artistic details
-  description += `Rendered in ${style} with ${lighting}. `;
-  description += `The image uses ${composition} to create visual impact. `;
+  if (prompt.includes('cottage') || prompt.includes('house') || prompt.includes('home')) {
+    description += `A whimsical cottage nestled in an enchanted setting, covered in climbing roses and surrounded by fairy lights. `;
+  }
   
-  // Add atmospheric details
-  description += `Rich color palette with careful attention to shadows, highlights, and mid-tones. `;
-  description += `Professional quality with sharp focus where needed and artistic blur for depth. `;
-  description += `The overall mood is carefully crafted to enhance the subject matter and create emotional resonance.`;
+  // Add aesthetic details
+  description += `The scene is illuminated by ${lighting}, creating a dreamy atmosphere. `;
+  description += `The color palette features ${colors} that blend harmoniously together. `;
+  description += `Delicate magical details include ${elements} scattered throughout the composition. `;
+  
+  // Add fairycore finishing touches
+  description += `The overall mood is ethereal and whimsical, evoking a sense of wonder and connection to nature's magic. `;
+  description += `Soft textures, gentle movements, and an abundance of natural beauty create a scene that feels both dreamy and alive with fairy enchantment.`;
   
   return description;
 }
@@ -217,7 +215,7 @@ export async function generateImage(description: string): Promise<{ url: string 
           body: JSON.stringify({
             inputs: description,
             parameters: {
-              negative_prompt: "blurry, bad quality, distorted, deformed, ugly, text, watermark, logo, words, letters, writing, eco generated, eco-generated, watermarks, signatures, labels, badges, stamps, overlay text, corner text",
+              negative_prompt: "blurry, bad quality, distorted, deformed, ugly, text, watermark, logo, words, letters, writing, eco generated, eco-generated, watermarks, signatures, labels, badges, stamps, overlay text, corner text, harsh lighting, dark themes, horror, scary, violent",
               num_inference_steps: 50,
               guidance_scale: 7.5
             }
@@ -260,7 +258,7 @@ export async function generateImage(description: string): Promise<{ url: string 
               body: JSON.stringify({
                 inputs: description,
                 parameters: {
-                  negative_prompt: "blurry, bad quality, distorted, deformed, text, watermark, logo, words, letters, writing, eco generated, eco-generated, watermarks, signatures, labels, badges, stamps, overlay text, corner text",
+                  negative_prompt: "blurry, bad quality, distorted, deformed, ugly, text, watermark, logo, words, letters, writing, eco generated, eco-generated, watermarks, signatures, labels, badges, stamps, overlay text, corner text, harsh lighting, dark themes, horror, scary, violent",
                   num_inference_steps: 30
                 }
               }),

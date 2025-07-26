@@ -18,6 +18,19 @@ export const imageGenerationSessions = pgTable("image_generation_sessions", {
   status: text("status").notNull().default("prompt"), // "prompt", "describing", "feedback", "generating", "completed"
   energySaved: integer("energy_saved").default(0),
   timeSaved: integer("time_saved").default(0),
+  moonbeamsEarned: integer("moonbeams_earned").default(0),
+  magicalEnergyUsed: integer("magical_energy_used").default(5), // stardust particles
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+export const moonbeamTasks = pgTable("moonbeam_tasks", {
+  id: serial("id").primaryKey(),
+  sessionId: integer("session_id"),
+  taskType: text("task_type").notNull(), // "delete_emails", "close_tabs", "dark_mode", etc.
+  taskDescription: text("task_description").notNull(),
+  reward: integer("reward").notNull(),
+  completed: boolean("completed").default(false),
+  completedAt: timestamp("completed_at"),
   createdAt: timestamp("created_at").defaultNow(),
 });
 
