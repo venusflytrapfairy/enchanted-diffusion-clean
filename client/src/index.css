@@ -50,10 +50,8 @@
   body {
     @apply font-sans antialiased text-foreground;
     background: linear-gradient(135deg, var(--lavender) 0%, var(--petal-pink) 25%, var(--mint) 50%, var(--baby-blue) 75%, var(--buttercream) 100%);
-    background-size: 400% 400%;
-    animation: fairyGradient 8s ease infinite;
     min-height: 100vh;
-    font-family: 'Dancing Script', 'Cardo', serif;
+    font-family: 'Cardo', 'Georgia', serif;
     position: relative;
     overflow-x: hidden;
   }
@@ -76,11 +74,13 @@
 
 /* Fairycore Styling */
 .font-fairy {
-  font-family: 'Dancing Script', 'Cardo', serif;
+  font-family: 'Cardo', 'Georgia', serif;
+  font-weight: 500;
 }
 
 .font-magical {
   font-family: 'Gloock', 'Cardo', serif;
+  font-weight: 600;
 }
 
 /* Custom emoji sizing for title */
@@ -176,9 +176,10 @@
 .floating-bg {
   position: fixed;
   pointer-events: none;
-  z-index: -1;
-  font-size: 2rem;
-  opacity: 0.1;
+  z-index: 1;
+  font-size: 3rem;
+  opacity: 0.2;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
 }
 
 .floating-bg:nth-child(1) { animation: float 8s ease-in-out infinite; }
@@ -186,6 +187,13 @@
 .floating-bg:nth-child(3) { animation: float 10s ease-in-out infinite 4s; }
 .floating-bg:nth-child(4) { animation: float 14s ease-in-out infinite 1s; }
 .floating-bg:nth-child(5) { animation: float 9s ease-in-out infinite 3s; }
+.floating-bg:nth-child(6) { animation: float 11s ease-in-out infinite 1.5s; }
+.floating-bg:nth-child(7) { animation: float 13s ease-in-out infinite 3.5s; }
+.floating-bg:nth-child(8) { animation: float 15s ease-in-out infinite 2.5s; }
+.floating-bg:nth-child(9) { animation: float 9.5s ease-in-out infinite 4.5s; }
+.floating-bg:nth-child(10) { animation: float 10.5s ease-in-out infinite 0.5s; }
+.floating-bg:nth-child(11) { animation: float 14.5s ease-in-out infinite 5s; }
+.floating-bg:nth-child(12) { animation: float 12.5s ease-in-out infinite 6s; }
 
 /* Moonbeam effect */
 .moonbeam-glow {

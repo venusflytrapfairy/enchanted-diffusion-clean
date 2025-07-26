@@ -10,7 +10,14 @@ import type { ImageGenerationSession } from "@shared/schema";
 
 // Floating background elements component
 const FloatingElements = () => {
-  const elements = ['🧚', '🦋', '🌸', '🍄', '✨', '🌙', '⭐', '🌿'];
+  const elements = ['🧚', '🦋', '🌸', '🍄', '✨', '🌙', '⭐', '🌿', '🍄', '✨', '🌟', '🌺'];
+  const positions = [
+    { left: '10%', top: '20%' }, { left: '85%', top: '15%' }, { left: '75%', top: '35%' },
+    { left: '20%', top: '60%' }, { left: '90%', top: '70%' }, { left: '15%', top: '80%' },
+    { left: '60%', top: '25%' }, { left: '40%', top: '85%' }, { left: '70%', top: '60%' },
+    { left: '25%', top: '40%' }, { left: '50%', top: '10%' }, { left: '5%', top: '45%' }
+  ];
+  
   return (
     <>
       {elements.map((element, index) => (
@@ -18,8 +25,8 @@ const FloatingElements = () => {
           key={index}
           className="floating-bg"
           style={{
-            left: `${Math.random() * 100}%`,
-            top: `${Math.random() * 100}%`,
+            left: positions[index]?.left || `${Math.random() * 100}%`,
+            top: positions[index]?.top || `${Math.random() * 100}%`,
             animationDelay: `${Math.random() * 10}s`,
           }}
         >
@@ -36,10 +43,10 @@ const FairyGuide = ({ message, isVisible }: { message: string; isVisible: boolea
   
   return (
     <div className="fixed bottom-8 right-8 z-50 fairy-guide">
-      <div className="glass-fairy rounded-2xl p-4 max-w-xs">
+      <div className="glass-fairy rounded-2xl p-4 max-w-xs shadow-lg border border-fairy-pink border-opacity-30">
         <div className="flex items-start gap-3">
-          <span className="text-2xl">🧚</span>
-          <p className="text-sm font-fairy text-foreground">{message}</p>
+          <span className="text-3xl animate-bounce">🧚</span>
+          <p className="text-sm font-fairy text-foreground font-medium leading-relaxed">{message}</p>
         </div>
       </div>
     </div>
@@ -169,7 +176,36 @@ export default function Home() {
     "Magic flows through your words... 🦋",
     "The stars are aligning perfectly... ⭐",
     "Such beautiful energy you bring... 🧚",
+    "The ancient trees speak of your creativity... 🌳",
+    "Your vision sparkles like morning dew... 💎",
+    "The woodland spirits dance with joy... 🍃",
+    "Fairy dust gathers around your dreams... ✨",
   ];
+
+  // Show random fairy messages periodically
+  useEffect(() => {
+    const showRandomMessage = () => {
+      const randomMessage = fairyMessages[Math.floor(Math.random() * fairyMessages.length)];
+      showFairyGuide(randomMessage);
+    };
+
+    // Show welcome message on load
+    const welcomeTimer = setTimeout(() => {
+      showFairyGuide("Welcome to our enchanted realm... 🧚✨");
+    }, 2000);
+
+    // Show random messages every 30 seconds when no session is active
+    const messageInterval = setInterval(() => {
+      if (!currentSessionId && !showFairy) {
+        showRandomMessage();
+      }
+    }, 30000);
+
+    return () => {
+      clearTimeout(welcomeTimer);
+      clearInterval(messageInterval);
+    };
+  }, [currentSessionId, showFairy]);
 
   const showFairyGuide = (message: string) => {
     setFairyMessage(message);
@@ -197,7 +233,12 @@ export default function Home() {
       setCurrentSessionId(newSession.id);
       setMagicalEnergy(prev => Math.max(0, prev - 5));
       queryClient.invalidateQueries({ queryKey: ["/api/sessions"] });
-      showFairyGuide("A new magical journey begins... 🌟");
+      const messages = [
+        "A new magical journey begins... 🌟",
+        "The spirits have heard your whisper... 🧚",
+        "Your creative energy awakens the forest... 🌿"
+      ];
+      showFairyGuide(messages[Math.floor(Math.random() * messages.length)]);
     },
     onError: () => {
       toast({
@@ -220,7 +261,12 @@ export default function Home() {
     onSuccess: () => {
       setMagicalProgress(100);
       queryClient.invalidateQueries({ queryKey: ["/api/sessions", currentSessionId] });
-      showFairyGuide("The spirits have spoken beautifully! ✨");
+      const messages = [
+        "The spirits have spoken beautifully! ✨",
+        "I saw this vision in the stars... 🌟",
+        "The forest magic flows through these words... 🍃"
+      ];
+      showFairyGuide(messages[Math.floor(Math.random() * messages.length)]);
       setTimeout(() => setMagicalProgress(0), 1000);
     },
     onError: () => {
@@ -295,7 +341,13 @@ export default function Home() {
       setMagicalProgress(100);
       setMagicalEnergy(prev => Math.max(0, prev - 3));
       queryClient.invalidateQueries({ queryKey: ["/api/sessions", currentSessionId] });
-      showFairyGuide("Behold! Your vision has taken form! 🌟");
+      const messages = [
+        "Behold! Your vision has taken form! 🌟",
+        "I saw this in a dream once. Lovely. 🌙",
+        "The moon approves of your choices... ✨",
+        "Such beautiful magic you've created... 🧚"
+      ];
+      showFairyGuide(messages[Math.floor(Math.random() * messages.length)]);
       setTimeout(() => {
         setMagicalProgress(0);
         setProgressStage("");
@@ -582,12 +634,10 @@ export default function Home() {
             </Card>
           )}
 
-          {/* Moonbeam Missions Panel */}
-          {session?.status === "completed" && (
-            <div className="mt-12">
-              <MoonbeamMissions sessionId={currentSessionId} />
-            </div>
-          )}
+          {/* Moonbeam Missions Panel - Always show */}
+          <div className="mt-12">
+            <MoonbeamMissions sessionId={currentSessionId} />
+          </div>
 
           {/* Energy Conservation Stats */}
           {session?.status === "completed" && (
