@@ -2,7 +2,14 @@
 
 ## Overview
 
-This is a full-stack web application that provides an AI-powered image generation service. The application allows users to create detailed image descriptions from simple prompts using AI, refine those descriptions with feedback, and generate images. It follows a multi-step workflow designed to save users time and energy by leveraging AI assistance throughout the creative process.
+This full-stack web application offers a new, energy-conscious approach to AI-powered image generation by prioritizing collaborative text refinement before a single pixel is rendered. Instead of relying on energy-intensive, trial-and-error image generation, users co-create richly detailed descriptions with the help of AI—refining their vision iteratively in natural language.
+
+Why does this matter?
+AI image generation models are significantly more resource-hungry than text-based models. Each image generated, especially at high quality, consumes far more energy than several rounds of text generation. By shifting the creative process to a text-first model, the tool dramatically cuts down on unnecessary image rendering—ensuring only the most aligned and intentional visions are brought to life.
+
+To guide this process, the platform features whimsical creative themes like Cloud Fairycore, Ocean Mermaidia, and Forest Goblin—each with its own aesthetic vocabulary and vibe. These themes help users articulate their visual ideas more vividly in words, making the AI-generated image more accurate and meaningful, while reducing wasted compute power on vague or poorly scoped prompts.
+
+This human-AI collaboration is more than efficient—it’s enchanting. Together, we craft the dream before casting the spell.
 
 ## User Preferences
 
@@ -39,7 +46,7 @@ Design aesthetic: Fairycore - whimsical, ethereal, delicate, soft but magical wi
 - **Server Entry**: `server/index.ts`
 - **API Routes**: RESTful endpoints in `server/routes.ts`
 - **Storage Layer**: Abstracted through `IStorage` interface with in-memory implementation
-- **External Services**: OpenAI integration for AI description generation and refinement
+- **External Services**:Stable Diffusion 3.5 Large Model From Hugging Face for image generation, Phi-3-Mini-4K-Instruct from Hugging Face for text generation
 - **Session Workflow**: Multi-stage process (prompt → describing → feedback → generating → completed)
 
 ### Frontend Architecture (React)
@@ -68,7 +75,7 @@ Design aesthetic: Fairycore - whimsical, ethereal, delicate, soft but magical wi
 6. **Image Generation**: Stable Diffusion 3.5 Large generates image using finalDescription or aiDescription
 7. **Completion**: Session marked as completed with metrics (energy/time saved)
 
-### Recent Changes (July 26, 2025)
+### Final Aesthetic Changes 
 - **MAJOR FAIRYCORE TRANSFORMATION**: Complete visual and interaction redesign
 - **Aesthetic Overhaul**: Transformed from Y2K cyber aesthetic to fairycore (whimsical, ethereal, delicate)
 - **Color Palette**: Soft pastels - lavender, dusty rose, mint, buttercream, baby blue
@@ -129,7 +136,7 @@ Design aesthetic: Fairycore - whimsical, ethereal, delicate, soft but magical wi
 - **Development**: `NODE_ENV=development` with Vite dev server
 - **Production**: `NODE_ENV=production` with static file serving
 - **Database**: `DATABASE_URL` required for PostgreSQL connection
-- **AI Services**: `OPENAI_API_KEY` required for OpenAI integration
+- **AI Services**: `HUGGINGFAKE KEY` required for models' integration
 
 ### Runtime Considerations
 - **Static Files**: Express serves built frontend from `dist/public`
