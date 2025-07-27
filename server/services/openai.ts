@@ -67,3 +67,4 @@ export async function generateImage(description: string): Promise<{ url: string 
     throw new Error("Failed to generate image");
   }
 }
+ 
