@@ -54,3 +54,4 @@ export type User = typeof users.$inferSelect;
 export type ImageGenerationSession = typeof imageGenerationSessions.$inferSelect;
 export type InsertSession = z.infer<typeof insertSessionSchema>;
 export type UpdateSession = z.infer<typeof updateSessionSchema>;
+ 
