@@ -148,3 +148,4 @@ Design aesthetic: Fairycore - whimsical, ethereal, delicate, soft but magical wi
 - **Development Banner**: Automatic development mode detection
 - **Runtime Error Overlay**: Enhanced error reporting in development
 - **Cartographer Plugin**: Code mapping for debugging (development only)
+ 
